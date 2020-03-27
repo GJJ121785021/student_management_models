@@ -14,12 +14,18 @@ class MyCharField(models.Field):
         return 'char(%s)' % self.max_length
 
 
+class MyTinyintField(models.IntegerField):
+    """自定义tinyint类型的字段类"""
+    def db_type(self, connection):
+        return 'tinyint'
+
+
 class ClassInfo(models.Model):
     classNo = MyCharField(max_length=10, primary_key=True, verbose_name='班级编号')
     className = models.CharField(max_length=30, null=False, verbose_name='班级名称')
     institute = models.CharField(max_length=30, null=False, verbose_name='所属学院')
     grade = models.SmallIntegerField(null=False, verbose_name='年级')
-    classNum = models.SmallIntegerField(null=False, verbose_name='班级人数')
+    classNum = MyTinyintField(null=False, verbose_name='班级人数')
 
     class Meta:
         db_table = 'ClassInfo'
@@ -40,8 +46,8 @@ class StudentInfo(models.Model):
 class CourseInfo(models.Model):
     courseNo = MyCharField(max_length=10, primary_key=True, verbose_name='课程号')
     courseName = models.CharField(max_length=30, null=False, verbose_name='课程名')
-    creditHour = models.DecimalField(max_digits=2, decimal_places=1, null=False, verbose_name='课程名')
-    courseHour = models.SmallIntegerField(null=False, verbose_name='课时数')
+    creditHour = models.DecimalField(max_digits=2, decimal_places=1, null=False, verbose_name='学分')
+    courseHour = MyTinyintField(null=False, verbose_name='课时数')
     priorCourse = models.CharField(max_length=30, null=False, verbose_name='先修课程')
     students = models.ManyToManyField(StudentInfo, related_name='courses', verbose_name='上课学生')
 

@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'student_performance_management.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'djdb',
         'USER': 'root',
         'PASSWORD': '123456',
         'PORT': '3306',
